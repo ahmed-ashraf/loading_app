@@ -48,12 +48,10 @@ class LoadingButton @JvmOverloads constructor(
     }
 
     private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
-//        buttonText = context.getString(buttonState.buttonText)
 
         when (new) {
             ButtonState.Default -> {
                 loadingPercentage = 0f
-//                paintCircle.color = context.getColor(R.color.colorAccent)
                 invalidate()
             }
             ButtonState.Completed -> {
@@ -68,11 +66,6 @@ class LoadingButton @JvmOverloads constructor(
         }
     }
 
-
-    init {
-//        buttonState = ButtonState.Loading
-//        valueAnimator.start()
-    }
 
 
     override fun onDraw(canvas: Canvas?) {
@@ -120,7 +113,6 @@ class LoadingButton @JvmOverloads constructor(
 
     override fun performClick(): Boolean {
         super.performClick()
-        buttonState = ButtonState.Loading
 
         invalidate()
         return true

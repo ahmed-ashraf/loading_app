@@ -9,11 +9,12 @@ import com.udacity.DetailActivity
 import com.udacity.R
 
 private val NOTIFICATION_ID = 0
-private val REQUEST_CODE = 0
-private val FLAGS = 0
 
-fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
+
+fun NotificationManager.sendNotification(messageBody: String, status: String, fileName: String, applicationContext: Context) {
     val contentIntent = Intent(applicationContext, DetailActivity::class.java)
+        .putExtra(DetailActivity.EXTRA_STATUS, status)
+        .putExtra(DetailActivity.EXTRA_FILENAME, fileName)
 
     val contentPendingIntent = PendingIntent.getActivity(
         applicationContext,
@@ -34,7 +35,7 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
             0,
             applicationContext.getString(R.string.notification_button),
             contentPendingIntent
-        )
+        ).setSmallIcon(R.mipmap.ic_launcher)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
 
     notify(NOTIFICATION_ID, builder.build())
