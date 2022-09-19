@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.provider.CalendarContract
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -27,15 +28,11 @@ class LoadingButton @JvmOverloads constructor(
         }
     }
 
+    private var  paint: Paint
 
-    private var paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = context.getColor(R.color.colorPrimary)
-    }
+    private var paintCircle: Paint
 
-
-    private var paintLoading = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = context.getColor(R.color.colorPrimaryDark)
-    }
+    private var paintLoading: Paint
 
     private val paintText = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = resources.getDimension(R.dimen.default_text_size)
@@ -43,8 +40,21 @@ class LoadingButton @JvmOverloads constructor(
         color = Color.WHITE
     }
 
-    private var paintCircle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = context.getColor(R.color.colorAccent)
+    init {
+        val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.LoadingButton,
+            0, 0)
+
+        paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = typedArray.getColor(R.styleable.LoadingButton_backgroundColor, Color.BLACK)
+        }
+
+        paintCircle = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = typedArray.getColor(R.styleable.LoadingButton_circleColor, Color.BLACK)
+        }
+
+        paintLoading = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = typedArray.getColor(R.styleable.LoadingButton_loadingColor, Color.BLACK)
+        }
     }
 
     private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
